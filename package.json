@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "./node_modules/.bin/nodemon",
+    "start": "node ./src/app.js",
     "eslint": "./node_modules/.bin/eslint src"
   },
   "dependencies": {

@@ -5,12 +5,14 @@ const dotenv = require('dotenv');
 const app = express();
 
 /* Loda config by dotenv */
-dotenv.load({ path: '.env.example' });
+dotenv.load({ path: '.env' });
+
+console.log(process.env.MONGODB_URI);
 
 app.set('port', process.env.port);
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello Wolrd Again!!!');
+  res.status(200).send('Hello Wolrd!!!');
 });
 
 app.listen(app.get('port'), () => {
