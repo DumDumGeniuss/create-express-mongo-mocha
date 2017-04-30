@@ -6,6 +6,10 @@ services:
      - "5000:5000"
     environment:
      - MONGODB_URI=mongodb://mongo:27017/dev
+    depends_on:
+     - mongo 
+    links:
+     - mongo 
     volumes:
      - .:/app
     command:
@@ -20,3 +24,5 @@ services:
      - .:/app
     command:
         ['npm', 'run', 'start']
+  mongo:
+    image: mongo:3.4
