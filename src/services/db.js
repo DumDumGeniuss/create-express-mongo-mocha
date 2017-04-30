@@ -4,9 +4,9 @@ const chalk = require('chalk');
 /**
 * connect to DB
 */
-const connect = (db_uri) => {
+const connect = (dbUri) => {
 	mongoose.Promise = global.Promise;
-	mongoose.connect(db_uri);
+	mongoose.connect(dbUri);
 	mongoose.connection.on('error', (err) => {
 	  console.error(err);
 	  console.log('%s Connecting to Mongodb failed, please check your mongodb', chalk.red('✗'));
@@ -18,4 +18,3 @@ const connect = (db_uri) => {
 };
 
 module.exports = connect;
-
