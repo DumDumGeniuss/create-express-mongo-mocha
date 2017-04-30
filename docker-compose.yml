@@ -13,7 +13,7 @@ services:
     volumes:
      - .:/app
     command:
-        ['npm', 'run', 'start']
+        ['npm', 'run', 'dev']
   web-prod:
     build: .
     ports:
