@@ -9,5 +9,7 @@ const router = express.Router();
 router.get('/', playerController.getPlayes);
 router.post('/', playerController.addPlayer);
 router.get('/:id', playerController.getPlayer);
+router.put('/:id', playerController.updatePlayer);
+router.delete('/:id', playerController.deletePlayer);
 
 module.exports = router;

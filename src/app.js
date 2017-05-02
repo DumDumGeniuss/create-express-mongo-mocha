@@ -1,6 +1,8 @@
 const express = require('express');
 const chalk = require('chalk');
 const dotenv = require('dotenv');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
 const db = require('./services/db.js');
 const homeRouter = require('./routes/home.js');
 const playerRouter = require('./routes/player.js');
@@ -24,10 +26,17 @@ app.set('db_uri', process.env.MONGODB_URI || process.env.MONGODB_LAB_URI);
 db(app.get('db_uri'));
 
 /**
+* Use bodyparser and Express-Validator
+*/
+app.use(bodyParser.json());
+app.use(expressValidator());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+/**
 * Routers
 */
 app.use('/', homeRouter);
-app.use('/palyers', playerRouter);
+app.use('/players', playerRouter);
 
 /**
 * Start server
