@@ -1,47 +1,52 @@
 const Player = require('../models/Player.js');
+const mongoose = require('mongoose');
 
-exports.getPlayes = async function (req, res) {
-  const players = await Player.find({});
-  res.status(200).json(players);
+exports.getPlayes = (req, res) => {
+  Player.find({}, (err, players) => {
+    if (err) {
+      res.status(500).json(err.message);
+    }
+    res.status(200).json(players);
+  });
 };
 
-exports.getPlayer = async function (req, res) {
-  try {
-    const player = await Player.findById(req.params.id);
+exports.getPlayer = (req, res) => {
+  Player.findById(req.params.id, (err, player) => {
+    if (err) {
+      res.status(500).json(err.message);
+    }
     if (!player) {
       res.status(404).send('The player you request does not exsist');
     }
     res.status(200).json(player);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
+  });
 };
 
-exports.addPlayer = async function (req, res) {
-  try {
-    const newPlayer = new Player(req.body);
-    const player = await newPlayer.save();
-    res.status(200).json(player);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
+exports.addPlayer = (req, res) => {
+  const newPlayer = new Player(req.body);
+  newPlayer.save((err, player) => {
+    if (err) {
+      res.status(500).json(err.message);
+    }
+    res.status(200).send(player);
+  });
 };
 
-exports.updatePlayer = async function (req, res) {
-  try {
-    const result = await Player.updateOne({ _id: req.params.id }, req.body, {});
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
+exports.updatePlayer = (req, res) => {
+  Player.updateOne({_id: req.params.id}, req.body, {}, (err, result) => {
+    if (err) {
+      res.status(500).json(err.message);
+    }
+    res.status(200).send('You successfully update the player with id, ' + req.params.id);
+  });
 };
 
-exports.deletePlayer = async function (req, res) {
-  try {
-    const result = await Player.deleteOne({ _id: req.params.id });
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(500).json(err.message);
-  }
+exports.deletePlayer = (req, res) => {
+  Player.deleteOne({ _id: req.params.id }, (err, result) => {
+    if (err) {
+      res.status(500).json(err.message);
+    }
+    res.status(200).send('You successfully delete the player with id, ' + req.params.id);
+  });
 };
 

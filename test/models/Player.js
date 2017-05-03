@@ -31,19 +31,14 @@ describe('Player Model', () => {
     PlayerMock
       .expects('find')
       .withArgs({})
-      .resolves([playerSample, playerSampleTwo]);
+      .yields(null, [playerSample, playerSampleTwo]);
 
-    Player.find({})
-      .then((result) => {
+    Player.find({}, (err, result) => {
         PlayerMock.verify();
         PlayerMock.restore();
         expect(result.length).to.equal(2);
-        done();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        done();
-      });
+        done(); 
+    });
   });
 
   it('Should find exact player by Id', (done) => {
@@ -52,19 +47,14 @@ describe('Player Model', () => {
     PlayerMock
       .expects('findById')
       .withArgs('aaabbbccc')
-      .resolves(playerSample);
+      .yields(null, playerSample);
 
-    Player.findById('aaabbbccc')
-      .then((result) => {
-        PlayerMock.verify();
-        PlayerMock.restore();
-        expect(result._id).to.equal('aaabbbccc');
-        done();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        done();
-      });
+    Player.findById('aaabbbccc', (err, result) => {
+      PlayerMock.verify();
+      PlayerMock.restore();
+      expect(result._id).to.equal('aaabbbccc');
+      done();
+    });
   });
 
   it('Should save without error', (done) => {
@@ -73,19 +63,14 @@ describe('Player Model', () => {
 
     PlayerMock
       .expects('save')
-      .resolves(playerSample);
+      .yields(null, playerSample);
 
-    player.save()
-      .then((result) => {
-        PlayerMock.verify();
-        PlayerMock.restore();
-        expect(result._id).to.equal('aaabbbccc');
-        done();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        done();
-      });
+    player.save((err, result) => {
+      PlayerMock.verify();
+      PlayerMock.restore();
+      expect(result._id).to.equal('aaabbbccc');
+      done();
+    });
   });
 
   it('Should update player without error', (done) => {
@@ -94,19 +79,14 @@ describe('Player Model', () => {
     PlayerMock
       .expects('updateOne')
       .withArgs({ _id: 'aaabbbccc' })
-      .resolves({ ok: 1 });
+      .yields(null, 'success');
 
-    Player.updateOne({ _id: 'aaabbbccc' })
-      .then((result) => {
-        PlayerMock.verify();
-        PlayerMock.restore();
-        expect(result.ok).to.equal(1);
-        done();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        done();
-      });
+    Player.updateOne({ _id: 'aaabbbccc' }, (err, result) => {
+      PlayerMock.verify();
+      PlayerMock.restore();
+      expect(result).to.equal('success');
+      done();
+    });
   });
 
   it('Should delete player without error', (done) => {
@@ -115,18 +95,13 @@ describe('Player Model', () => {
     PlayerMock
       .expects('deleteOne')
       .withArgs({ _id: 'aaabbbccc' })
-      .resolves({ ok: 1 });
+      .yields(null, 'success');
 
-    Player.deleteOne({ _id: 'aaabbbccc' })
-      .then((result) => {
-        PlayerMock.verify();
-        PlayerMock.restore();
-        expect(result.ok).to.equal(1);
-        done();
-      })
-      .catch((err) => {
-        console.log(err.message);
-        done();
-      });
+    Player.deleteOne({ _id: 'aaabbbccc' }, (err, result) => {
+      PlayerMock.verify();
+      PlayerMock.restore();
+      expect(result).to.equal('success');
+      done();
+    });
   });
 });
