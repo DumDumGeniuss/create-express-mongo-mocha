@@ -7,6 +7,7 @@
   "author": "DumDumGeniuss",
   "license": "MIT",
   "scripts": {
+    "test": "mocha --recursive",
     "dev": "./node_modules/.bin/nodemon",
     "start": "node ./src/app.js",
     "eslint": "./node_modules/.bin/eslint src test"

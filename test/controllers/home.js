@@ -1,5 +1,4 @@
 const sinon = require('sinon');
-const { expect } = require('chai');
 const homeController = require('../../src/controllers/home.js');
 
 describe('Home Controller', () => {
@@ -8,19 +7,19 @@ describe('Home Controller', () => {
 
   beforeEach(() => {
     res = {
-      status: (code) => {
-        return {
-          send: () => {}
-        };
-      }
+      status: () => (
+        {
+          send: () => {},
+        }
+      ),
     };
   });
-  
-  it('Should return success message', (done) => {
-    const resSpy = sinon.spy(res, "status");
 
-  	homeController.checkApp(req, res);
-    
+  it('Should return success message', (done) => {
+    const resSpy = sinon.spy(res, 'status');
+
+    homeController.checkApp(req, res);
+
     sinon.assert.calledWith(resSpy, 200);
 
     resSpy.restore();

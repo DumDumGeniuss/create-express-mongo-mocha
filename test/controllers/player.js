@@ -1,32 +1,30 @@
 const sinon = require('sinon');
-const { expect } = require('chai');
 const playerController = require('../../src/controllers/player.js');
 const Player = require('../../src/models/Player.js');
 
 describe('Player Controller', () => {
   let res;
   let req;
-  let newUser = new Player();
 
   beforeEach(() => {
     res = {
-      status: (code) => {
-        return {
+      status: () => (
+        {
           send: () => {},
           json: () => {},
-        };
-      }
+        }
+      ),
     };
     req = {
       params: {
         id: 'aaabbbccc',
       },
-    }
+    };
   });
-  
+
   it('Successfully get players', (done) => {
-    const resSpy = sinon.spy(res, "status");
-    const playerStub = sinon.stub(Player, 'find').callsFake(({}, callback) => {
+    const resSpy = sinon.spy(res, 'status');
+    const playerStub = sinon.stub(Player, 'find').callsFake((query, callback) => {
       callback();
 
       sinon.assert.calledWith(resSpy, 200);
@@ -40,7 +38,7 @@ describe('Player Controller', () => {
     playerController.getPlayes(req, res);
   });
   it('Successfully get one player', (done) => {
-    const resSpy = sinon.spy(res, "status");
+    const resSpy = sinon.spy(res, 'status');
     const playerStub = sinon.stub(Player, 'findById').callsFake((id, callback) => {
       callback();
 
@@ -59,7 +57,7 @@ describe('Player Controller', () => {
     done();
   });
   it('Successfully update a player', (done) => {
-    const resSpy = sinon.spy(res, "status");
+    const resSpy = sinon.spy(res, 'status');
     const playerStub = sinon.stub(Player, 'updateOne').callsFake((query, params, options, callback) => {
       callback();
 
@@ -74,7 +72,7 @@ describe('Player Controller', () => {
     playerController.updatePlayer(req, res);
   });
   it('Successfully delete a player', (done) => {
-    const resSpy = sinon.spy(res, "status");
+    const resSpy = sinon.spy(res, 'status');
     const playerStub = sinon.stub(Player, 'deleteOne').callsFake((query, callback) => {
       callback();
 

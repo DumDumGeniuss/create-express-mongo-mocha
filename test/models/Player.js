@@ -34,10 +34,10 @@ describe('Player Model', () => {
       .yields(null, [playerSample, playerSampleTwo]);
 
     Player.find({}, (err, result) => {
-        PlayerMock.verify();
-        PlayerMock.restore();
-        expect(result.length).to.equal(2);
-        done(); 
+      PlayerMock.verify();
+      PlayerMock.restore();
+      expect(result.length).to.equal(2);
+      done();
     });
   });
 
